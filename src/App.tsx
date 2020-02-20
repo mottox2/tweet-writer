@@ -1,24 +1,28 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
 import Tweet from './components/Tweet'
+import { useCallback } from 'react';
 
-function App() {
+const App = () => {
+  const [tweets, setTweets] = useState<string[]>([''])
+  const updateTweet = useCallback((tweet: string, index: number) => {
+    const newTweets = [...tweets]
+    newTweets[index] = tweet
+    setTweets(newTweets)
+  }, [tweets])
+  const createTweet = useCallback(() => {
+    setTweets([...tweets, ''])
+  }, [tweets])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Tweet/>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {
+        tweets.map((tweet, index) => {
+          return <Tweet tweet={tweet} onUpdate={(tweet: string) => {
+            updateTweet(tweet, index)
+          }}  key={index} />
+        })
+      }
+      <button onClick={createTweet}>New Tweets</button>
     </div>
   );
 }
