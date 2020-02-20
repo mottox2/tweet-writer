@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Tweet from './components/Tweet'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <Tweet/>
         <a
           className="App-link"
           href="https://reactjs.org"
