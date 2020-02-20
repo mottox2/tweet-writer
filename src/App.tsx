@@ -1,30 +1,51 @@
-import React, { useState } from 'react';
-import Tweet from './components/Tweet'
-import { useCallback } from 'react';
+import React, { useState } from "react";
+import Tweet from "./components/Tweet";
+import Button from "./components/Button";
+import GlobalStyle from "./components/GlobalStyle";
+import { useCallback } from "react";
 
 const App = () => {
-  const [tweets, setTweets] = useState<string[]>([''])
-  const updateTweet = useCallback((tweet: string, index: number) => {
-    const newTweets = [...tweets]
-    newTweets[index] = tweet
-    setTweets(newTweets)
-  }, [tweets])
+  const [tweets, setTweets] = useState<Tweet[]>([
+    {
+      text: "",
+      createdAt: new Date().toISOString()
+    }
+  ]);
+  const updateTweet = useCallback(
+    (tweet: Tweet, index: number) => {
+      const newTweets = [...tweets];
+      newTweets[index] = tweet;
+      setTweets(newTweets);
+    },
+    [tweets]
+  );
   const createTweet = useCallback(() => {
-    setTweets([...tweets, ''])
-  }, [tweets])
+    setTweets([
+      ...tweets,
+      {
+        text: "",
+        createdAt: new Date().toISOString()
+      }
+    ]);
+  }, [tweets]);
 
   return (
     <div>
-      {
-        tweets.map((tweet, index) => {
-          return <Tweet tweet={tweet} onUpdate={(tweet: string) => {
-            updateTweet(tweet, index)
-          }}  key={index} />
-        })
-      }
-      <button onClick={createTweet}>New Tweets</button>
+      <GlobalStyle />
+      {tweets.map((tweet, index) => {
+        return (
+          <Tweet
+            tweet={tweet}
+            onUpdate={(tweet: Tweet) => {
+              updateTweet(tweet, index);
+            }}
+            key={index}
+          />
+        );
+      })}
+      <Button onClick={createTweet}>New Tweets</Button>
     </div>
   );
-}
+};
 
 export default App;
