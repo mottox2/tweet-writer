@@ -4,6 +4,25 @@ import css from "@emotion/css/macro";
 import TextareaAutosize from "react-autosize-textarea";
 import { useEffect } from "react";
 import { createRef } from "react";
+import { useMemo } from "react";
+
+const countlength = (str: string) => {
+  var result = 0;
+  for (var i = 0; i < str.length; i++) {
+    var chr = str.charCodeAt(i);
+    if (
+      (chr >= 0x00 && chr < 0x81) ||
+      chr === 0xf8f0 ||
+      (chr >= 0xff61 && chr < 0xffa0) ||
+      (chr >= 0xf8f1 && chr < 0xf8f4)
+    ) {
+      result += 1;
+    } else {
+      result += 2;
+    }
+  }
+  return result;
+};
 
 const name = css`
   font-weight: bold;
@@ -24,12 +43,19 @@ const Tweet: React.FC<{
     ref.current.focus();
   }, []);
 
+  const length = useMemo(() => countlength(tweet.text), [tweet.text]);
+  let countColor = "";
+  if (length === 0) countColor = "transparent";
+  else if (length > 139) countColor = "red";
+  else if (length > 120) countColor = "yellow";
+
   return (
     <div
       css={css`
         display: flex;
         padding: 16px;
         border-bottom: 1px solid rgb(56, 68, 77);
+        position: relative;
       `}
     >
       <div
@@ -72,6 +98,20 @@ const Tweet: React.FC<{
           `}
           value={tweet.text}
         />
+        <span
+          css={css`
+            font-size: 12px;
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            font-weight: bold;
+          `}
+          style={{
+            color: countColor
+          }}
+        >
+          {length}
+        </span>
       </div>
     </div>
   );
