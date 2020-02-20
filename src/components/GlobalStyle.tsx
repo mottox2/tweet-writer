@@ -9,6 +9,9 @@ const GlobalStyle: React.FC = () => (
         background-color: rgb(21, 32, 43);
         color: white;
         font-size: 15px;
+        font-family: -apple-system, BlinkMacSystemFont, Roboto, "游ゴシック体",
+          YuGothic, "Yu Gothic Medium", sans-serif;
+        font-size: 15px;
       }
     `}
   />

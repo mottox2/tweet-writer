@@ -8,7 +8,7 @@ const App = () => {
   const [tweets, setTweets] = useState<Tweet[]>([
     {
       text: "",
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toLocaleString()
     }
   ]);
   const updateTweet = useCallback(
@@ -24,7 +24,7 @@ const App = () => {
       ...tweets,
       {
         text: "",
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toLocaleString()
       }
     ]);
   }, [tweets]);
@@ -43,7 +43,14 @@ const App = () => {
           />
         );
       })}
-      <Button onClick={createTweet}>New Tweets</Button>
+      <div
+        style={{
+          margin: "12px auto",
+          textAlign: "center"
+        }}
+      >
+        <Button onClick={createTweet}>New Tweets</Button>
+      </div>
     </div>
   );
 };

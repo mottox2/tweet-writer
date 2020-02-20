@@ -77,7 +77,6 @@ const Tweet: React.FC<{
         <TextareaAutosize
           ref={ref}
           onChange={e => {
-            console.log((e.target as any).value);
             onUpdate({
               ...tweet,
               text: (e.target as any).value
@@ -87,13 +86,16 @@ const Tweet: React.FC<{
             display: block;
             width: 100%;
             color: white;
-            padding: 4px 0;
+            padding: 8px 0;
+            margin-top: 4px;
+            line-height: 1.5;
 
             &:hover {
               background-color: rgba(255, 255, 255, 0.04);
             }
             &:focus {
               background-color: rgba(255, 255, 255, 0.04);
+              outline: none;
             }
           `}
           value={tweet.text}
